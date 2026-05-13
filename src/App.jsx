@@ -8,6 +8,7 @@ import {
   collection,
   addDoc,
   query,
+  where,
   orderBy,
   onSnapshot,
   serverTimestamp,
@@ -29,6 +30,18 @@ function App() {
       setUser(currentUser);
     });
 
+    return unsubscribeAuth;
+  }, []);
+
+  useEffect(() => {
+    if (!user) {
+      setOrders([]);
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
+
     const ordersQuery = query(
       collection(db, 'orders'),
       orderBy('createdAt', 'desc')
@@ -40,20 +53,19 @@ function App() {
       setLoading(false);
     });
 
-    return () => {
-      unsubscribeAuth();
-      unsubscribeOrders();
-    };
-  }, []);
+    return () => unsubscribeOrders();
+  }, [user]);
 
   const handleGoogleLogin = async () => {
     try {
       await signInWithPopup(auth, provider);
     } catch (error) {
       console.error('Error login:', error);
-      alert('Error al iniciar sesión con Google.');
+      alert(`Error al iniciar sesión con Google: ${error.message}`);
     }
   };
+
+  const userName = user?.displayName || user?.email || 'Usuario';
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -151,14 +163,17 @@ function App() {
 
           <section className="card list-card">
             <div className="list-header">
-              <h2>Pedidos registrados</h2>
-              <span>{user.displayName || user.email}</span>
+              <div>
+                <h2>Pedidos registrados</h2>
+                <p>{orders.length} pedido(s)</p>
+              </div>
+              <span>{userName}</span>
             </div>
 
             {loading ? (
               <p>Cargando pedidos...</p>
             ) : orders.length === 0 ? (
-              <p>No hay pedidos aún.</p>
+              <p>No tienes pedidos registrados.</p>
             ) : (
               <ul className="order-list">
                 {orders.map((order) => (
@@ -166,9 +181,15 @@ function App() {
                     <div>
                       <strong>{order.product}</strong>
                       <p>{order.note || 'Sin nota'}</p>
+                      <small>Pedido de: {order.userName || order.userEmail || 'Anónimo'}</small>
                     </div>
                     <div className="order-meta">
                       <span>Cantidad: {order.quantity}</span>
+                      <span>
+                        {order.createdAt?.toDate
+                          ? order.createdAt.toDate().toLocaleString()
+                          : 'Fecha no disponible'}
+                      </span>
                       <button
                         className="button small"
                         onClick={() => handleDelete(order.id)}
