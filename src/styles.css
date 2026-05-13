@@ -1,0 +1,175 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, system-ui, sans-serif;
+  background: #f4f7fb;
+  color: #111827;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  min-height: 100vh;
+}
+
+body {
+  background: radial-gradient(circle at top left, #e7f1ff 0%, transparent 35%),
+    radial-gradient(circle at bottom right, #d1d5ff 0%, transparent 30%),
+    #eef2ff;
+}
+
+button, input, textarea {
+  font: inherit;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}
+
+.app-shell {
+  padding: 1rem;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.app-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: clamp(1.75rem, 3vw, 2.6rem);
+}
+
+.app-header p {
+  margin: 0.4rem 0 0;
+  color: #4b5563;
+}
+
+.card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+}
+
+.center-card {
+  max-width: 420px;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.content-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 860px) {
+  .content-grid {
+    grid-template-columns: 360px minmax(0, 1fr);
+  }
+}
+
+.form-card label,
+.form-card textarea,
+.form-card input {
+  display: block;
+  width: 100%;
+}
+
+.form-card label {
+  margin-bottom: 1rem;
+  color: #334155;
+}
+
+.form-card input,
+.form-card textarea {
+  margin-top: 0.5rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.75rem;
+  padding: 0.9rem 1rem;
+  background: #f8fafc;
+}
+
+.form-card textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.button {
+  width: 100%;
+  background: #2563eb;
+  color: white;
+  border-radius: 0.9rem;
+  padding: 0.95rem 1rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  background: #1d4ed8;
+}
+
+.button.secondary {
+  width: auto;
+  background: #f8fafc;
+  color: #111827;
+  border: 1px solid #cbd5e1;
+}
+
+.button.small {
+  width: auto;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.9rem;
+}
+
+.list-card .list-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.order-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.order-item {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 0.85rem;
+}
+
+.order-item strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.order-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  color: #475569;
+}
+
+@media (max-width: 640px) {
+  .app-shell {
+    padding: 1rem;
+  }
+}
